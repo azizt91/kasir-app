@@ -16,5 +16,5 @@
             "dest": "/public/index.php"
         }
     ],
-    "buildCommand": "npm install && npm run build",
+    "buildCommand": "npm install && npm run build"
 }
