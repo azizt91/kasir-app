@@ -2,7 +2,7 @@
     "version": 2,
     "framework": null,
     "functions": {
-        "public/index.php": {
+        "api/index.php": {
             "runtime": "vercel-php@0.6.0"
         }
     },
@@ -13,7 +13,7 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/public/index.php"
+            "dest": "/api/index.php"
         }
     ],
     "buildCommand": "npm install && npm run build"
