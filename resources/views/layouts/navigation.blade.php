@@ -123,6 +123,9 @@ use Illuminate\Support\Facades\Storage;
                 <x-responsive-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.*')">
                     📊 Laporan
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('settings.index')" :active="request()->routeIs('settings.*')">
+                   ⚙️ Setting
+                </x-responsive-nav-link>
             @endif
         </div>
 
