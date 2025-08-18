@@ -1,4 +1,3 @@
-
 @php
 use Illuminate\Support\Facades\Storage;
 @endphp
@@ -6,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 
 @section('content')
 <div class="bg-gray-50 min-h-screen">
-    <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div class="pb-6 border-b-2 border-gray-200 mb-8">
             <h1 class="text-3xl font-bold text-gray-900">⚙️ Pengaturan Toko</h1>
             <p class="text-gray-600 mt-1">Kelola informasi umum dan branding toko Anda.</p>
@@ -29,7 +28,7 @@ use Illuminate\Support\Facades\Storage;
                                 @error('store_name')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
                             </div>
 
-                            <div>
+                            <div class="md:col-span-2">
                                 <label for="store_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
                                 <input type="text" id="store_phone" name="store_phone" value="{{ old('store_phone', $settings->store_phone) }}"
                                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
@@ -125,3 +124,6 @@ use Illuminate\Support\Facades\Storage;
     </div>
 </div>
 @endsection
+
+
+

@@ -1,4 +1,6 @@
 import './bootstrap';
+import { BrowserMultiFormatReader } from '@zxing/library';
+window.ZXing = { BrowserMultiFormatReader };
 import Swal from 'sweetalert2';
 
 import Alpine from 'alpinejs';

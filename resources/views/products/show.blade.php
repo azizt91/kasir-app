@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="bg-gray-50 min-h-screen">
-    <div class="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between pb-6 border-b-2 border-gray-200 mb-8">
             <div>
                 <a href="{{ route('products.index') }}" class="flex items-center text-sm text-gray-500 hover:text-gray-800 mb-2">

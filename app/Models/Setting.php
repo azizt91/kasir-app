@@ -11,7 +11,7 @@ class Setting extends Model
         'store_address',
         'store_phone',
         'store_logo',
-        'store_description'
+        'store_description',
     ];
 
     /**
@@ -20,7 +20,7 @@ class Setting extends Model
     public static function getStoreSettings()
     {
         $settings = self::first();
-        
+
         if (!$settings) {
             $settings = self::create([
                 'store_name' => 'Minimarket POS',
@@ -29,7 +29,7 @@ class Setting extends Model
                 'store_description' => 'Sistem Point of Sale modern untuk mengelola bisnis minimarket Anda dengan mudah dan efisien'
             ]);
         }
-        
+
         return $settings;
     }
 

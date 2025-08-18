@@ -22,19 +22,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
     Route::get('/pos/products/search', [PosController::class, 'searchProducts'])->name('pos.products.search');
     Route::get('/pos/categories', [PosController::class, 'getCategories'])->name('pos.categories');
     Route::post('/pos/search', [PosController::class, 'searchProducts'])->name('pos.search');
     Route::post('/pos/transaction', [PosController::class, 'store'])->name('pos.transaction');
-    
 
-    
+
+
     // Admin only routes
     Route::middleware('admin')->group(function () {
         Route::resource('products', ProductController::class);
+        Route::get('/products/barcodes/print', [App\Http\Controllers\ProductController::class, 'printBarcodes'])->name('products.print_barcodes');
         Route::resource('categories', CategoryController::class);
         Route::resource('users', UserController::class);
         Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');

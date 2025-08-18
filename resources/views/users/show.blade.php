@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="py-8">
-    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <div class="flex items-center space-x-4">
@@ -51,7 +51,7 @@
                             </div>
                             <h3 class="text-xl font-semibold text-gray-900">{{ $user->name }}</h3>
                             <p class="text-sm text-gray-600 mt-1">{{ $user->email }}</p>
-                            
+
                             <!-- Role Badge -->
                             <div class="mt-4">
                                 @if($user->role === 'admin')
