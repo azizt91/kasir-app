@@ -12,84 +12,131 @@
 @endsection
 
 @section('content')
-<div class="min-h-screen bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-
-            {{-- Kolom Kiri (Produk & Kategori) --}}
-            <div class="lg:col-span-3">
-
-                {{-- Area Pencarian --}}
-                <div class="bg-white rounded-lg shadow-sm mb-6 p-4">
-                    {{-- [RESPONSIVE] Dibuat vertikal di layar kecil (flex-col) dan horizontal di layar lebih besar (sm:flex-row). --}}
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <div class="flex-1 relative">
-                            <input type="text" id="product-search" placeholder="Cari nama atau SKU produk..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500" autocomplete="off">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            </div>
-                        </div>
-                        <button onclick="openScannerModal()()" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            Scan barcode...
-                        </button>
-                    </div>
-                    <div id="search-results" class="mt-4 space-y-2 max-h-60 overflow-y-auto"></div>
+<div class="p-4 sm:p-6 lg:p-8 min-h-screen">
+    <!-- Page Header -->
+    <div class="mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Point of Sale</h1>
+                <p class="text-gray-600 mt-1">Scan, add products, and process transactions</p>
+            </div>
+            <div class="mt-4 sm:mt-0 flex items-center space-x-3">
+                <div class="flex items-center px-3 py-2 bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                    <span class="text-sm font-medium text-gray-700">Online</span>
                 </div>
+            </div>
+        </div>
+    </div>
 
-                {{-- Tab Kategori --}}
-                <div class="bg-white rounded-lg mb-6">
-                    <div class="border-b border-gray-200">
-                        {{-- [FIX] Konten tab kategori diisi oleh JavaScript untuk menghindari duplikasi render. --}}
-                        <nav id="category-tabs-container" class="-mb-px flex space-x-8 overflow-x-auto"></nav>
-                    </div>
-                </div>
-
-                {{-- Daftar Produk --}}
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    {{-- [RESPONSIVE] Grid produk beradaptasi di berbagai ukuran layar untuk tampilan optimal. --}}
-                    <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 min-h-[300px]">
-                        {{-- Produk akan dimuat di sini oleh JavaScript --}}
-                    </div>
-
-                    {{-- Paginasi --}}
-                    <div class="flex flex-col sm:flex-row justify-between items-center mt-6 pt-4 border-t gap-4">
-                        <div class="flex items-center space-x-4">
-                            <span id="pagination-info" class="text-sm text-gray-500"></span>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-sm text-gray-500">per halaman</span>
-                                <select id="per-page-select" onchange="changePerPage(this.value)" class="border-gray-300 rounded text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
-                                    <option value="10" selected>10</option>
-                                    <option value="20">20</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </div>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {{-- Products Section (Left Side) --}}
+        <div class="lg:col-span-3 space-y-6">
+            {{-- Search Area --}}
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-1 relative">
+                        <input type="text" id="product-search" 
+                               placeholder="Search products by name or barcode..." 
+                               class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200" 
+                               autocomplete="off">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
                         </div>
-                        <div id="pagination-buttons" class="flex space-x-1"></div>
                     </div>
+                    <button onclick="openScannerModal()" 
+                            class="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl hover:from-indigo-600 hover:to-purple-700 flex items-center justify-center gap-2 transition-all duration-200 shadow-sm hover:shadow-md">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="hidden sm:inline">Scan</span>
+                    </button>
+                </div>
+                <div id="search-results" class="mt-4 space-y-2 max-h-60 overflow-y-auto scrollbar-thin"></div>
+            </div>
+
+            {{-- Category Tabs --}}
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="border-b border-gray-200">
+                    <nav id="category-tabs-container" class="-mb-px flex space-x-1 overflow-x-auto scrollbar-thin px-6 py-4"></nav>
                 </div>
             </div>
 
-            {{-- Kolom Kanan (Keranjang) --}}
-            <div class="lg:col-span-1">
-                <div class="bg-white rounded-lg shadow-sm p-4 sticky top-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-semibold">Keranjang</h3>
-                        <button onclick="clearCart()" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium">Reset</button>
+            {{-- Products Grid --}}
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Products</h3>
+                        <p class="text-sm text-gray-500">Click on a product to add it to cart</p>
                     </div>
-                    <div id="cart-items-container" class="space-y-3 mb-4 max-h-80 overflow-y-auto">
-                        {{-- Item keranjang akan diisi di sini --}}
+                </div>
+                
+                <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 min-h-[400px]">
+                    {{-- Products will be loaded here by JavaScript --}}
+                </div>
+
+                {{-- Pagination --}}
+                <div class="flex flex-col sm:flex-row justify-between items-center mt-8 pt-6 border-t border-gray-200 gap-4">
+                    <div class="flex items-center space-x-4">
+                        <span id="pagination-info" class="text-sm text-gray-500"></span>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-500">per page</span>
+                            <select id="per-page-select" 
+                                    onchange="changePerPage(this.value)" 
+                                    class="border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="border-t pt-4 space-y-2">
-                        <div class="flex justify-between text-sm"><span>Subtotal</span><span id="subtotal">Rp 0</span></div>
-                        <div class="flex justify-between font-bold text-lg"><span>Total</span><span id="total">Rp 0</span></div>
-                    </div>
-                    <button id="checkout-button" onclick="openPaymentModal()" class="w-full mt-4 bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 font-medium flex items-center justify-center gap-2 disabled:bg-gray-400" disabled>
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path></svg>
-                        Checkout
+                    <div id="pagination-buttons" class="flex space-x-1"></div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Cart Section (Right Side) --}}
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900">Shopping Cart</h3>
+                    <button onclick="clearCart()" 
+                            class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 border border-red-200">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        Clear
                     </button>
                 </div>
+                
+                <div id="cart-items-container" class="space-y-3 mb-6 max-h-80 overflow-y-auto scrollbar-thin">
+                    {{-- Cart items will be populated here --}}
+                </div>
+                
+                <div class="border-t border-gray-200 pt-6 space-y-3">
+                    <div class="flex justify-between text-sm text-gray-600">
+                        <span>Subtotal</span>
+                        <span id="subtotal" class="font-medium">Rp 0</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-bold text-gray-900">
+                        <span>Total</span>
+                        <span id="total">Rp 0</span>
+                    </div>
+                </div>
+                
+                <button id="checkout-button" 
+                        onclick="openPaymentModal()" 
+                        class="w-full mt-6 bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-4 rounded-xl hover:from-indigo-600 hover:to-purple-700 font-semibold flex items-center justify-center gap-2 disabled:from-gray-400 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md" 
+                        disabled>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
+                    </svg>
+                    Checkout
+                </button>
             </div>
         </div>
     </div>

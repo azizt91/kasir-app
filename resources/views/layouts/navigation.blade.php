@@ -1,6 +1,9 @@
+{{-- This file is kept for backward compatibility --}}
+{{-- The new layout uses sidebar.blade.php and header.blade.php --}}
 @php
-use Illuminate\Support\Facades\Storage;
+use IlluminateSupportFacadesStorage;
 @endphp
+<!-- This navigation is used as fallback when old layout is needed -->
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,7 +24,7 @@ use Illuminate\Support\Facades\Storage;
                             </div>
                         @endif
                         <div>
-                            <h1 class="text-xl font-bold text-gray-800">{{ $storeSettings->store_name }}</h1>
+                            <h1 class="text-xl font-bold text-gray-800">{{ $storeSettings->store_name ?? 'Minimarket POS' }}</h1>
                             <p class="text-xs text-gray-500">Point of Sale System</p>
                         </div>
                     </a>

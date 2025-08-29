@@ -138,29 +138,29 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 px-4 sm:px-0">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-8 px-4 sm:px-0">
             <!-- Recent Transactions -->
-            <div class="bg-white overflow-hidden shadow-sm rounded-lg">
-                <div class="p-6 bg-gradient-to-r from-cyan-50 to-blue-50 border-b border-gray-200">
+            <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-200 h-fit">
+                <div class="p-6 border-b border-gray-200">
                     <div class="flex items-center space-x-3">
-                        <div class="p-2 bg-cyan-100 rounded-lg">
-                            <svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="p-2 bg-cyan-50 rounded-xl">
+                            <svg class="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                             </svg>
                         </div>
                         <div>
                             <h3 class="text-lg font-semibold text-gray-900">Transaksi Terbaru</h3>
-                            <p class="text-sm text-gray-600">10 transaksi terakhir</p>
+                            <p class="text-sm text-gray-500">10 transaksi terakhir</p>
                         </div>
                     </div>
                 </div>
                 <div class="p-6">
-                    <div class="space-y-4">
+                    <div class="space-y-4" style="max-height: 400px; overflow-y: auto;">
                         @forelse($recent_transactions as $transaction)
-                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-200">
                                 <div class="flex items-center space-x-4">
                                     <div class="flex-shrink-0">
-                                        <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+                                        <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
                                             <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                 <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"></path>
                                             </svg>
@@ -195,27 +195,34 @@
             </div>
 
             <!-- Low Stock Products -->
-            <div class="bg-white overflow-hidden shadow-sm rounded-lg">
-                <div class="p-6 bg-gradient-to-r from-red-50 to-pink-50 border-b border-gray-200">
-                    <div class="flex items-center space-x-3">
-                        <div class="p-2 bg-red-100 rounded-lg">
-                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                            </svg>
+            <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-200 h-fit">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 bg-red-50 rounded-xl">
+                                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Low Stock Alert</h3>
+                                <p class="text-sm text-gray-500">Products need restocking</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900">Produk Stok Rendah</h3>
-                            <p class="text-sm text-gray-600">Perlu segera direstok</p>
-                        </div>
+                        @if(auth()->user()->role === 'admin')
+                            <a href="{{ route('products.index') }}?filter=low_stock" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                                Manage →
+                            </a>
+                        @endif
                     </div>
                 </div>
                 <div class="p-6">
-                    <div class="space-y-4">
+                    <div class="space-y-4" style="max-height: 400px; overflow-y: auto;">
                         @forelse($low_stock_products as $product)
-                            <div class="flex items-center justify-between p-4 bg-red-50 rounded-lg border border-red-100">
+                            <div class="flex items-center justify-between p-4 bg-red-50 rounded-xl border border-red-100">
                                 <div class="flex items-center space-x-4">
                                     <div class="flex-shrink-0">
-                                        <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center">
+                                        <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl flex items-center justify-center">
                                             <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"></path>
                                             </svg>
@@ -223,7 +230,7 @@
                                     </div>
                                     <div>
                                         <p class="text-sm font-medium text-gray-900">{{ $product->name }}</p>
-                                        <p class="text-xs text-gray-500">{{ $product->category->name ?? 'Tanpa Kategori' }}</p>
+                                        <p class="text-xs text-gray-500">{{ $product->category->name ?? 'No Category' }}</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
@@ -236,7 +243,7 @@
                                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <p class="mt-2 text-sm text-gray-500">Semua produk stok aman</p>
+                                <p class="mt-2 text-sm text-gray-500">All products have sufficient stock</p>
                             </div>
                         @endforelse
                     </div>
@@ -245,31 +252,36 @@
         </div>
 
         <!-- Top Products This Week -->
-        <div class="mt-6 sm:mt-8 px-4 sm:px-0">
-            <div class="bg-white overflow-hidden shadow-sm rounded-lg">
-                <div class="p-6 bg-gradient-to-r from-green-50 to-emerald-50 border-b border-gray-200">
-                    <div class="flex items-center space-x-3">
-                        <div class="p-2 bg-green-100 rounded-lg">
-                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900">Produk Terlaris Minggu Ini</h3>
-                            <p class="text-sm text-gray-600">Top 5 produk dengan penjualan tertinggi</p>
+        @if(auth()->user()->role === 'admin')
+            <div class="mt-8">
+                <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="p-2 bg-green-50 rounded-xl">
+                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900">Top Products This Week</h3>
+                                    <p class="text-sm text-gray-500">Best selling products</p>
+                                </div>
+                            </div>
+                            <a href="{{ route('reports.products') }}" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                                Full report →
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="p-6">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ranking</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produk</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Terjual</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Pendapatan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Sold</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -292,9 +304,9 @@
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0 h-10 w-10">
                                                     @if($product->image)
-                                                        <img class="h-10 w-10 rounded-lg object-cover" src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}">
+                                                        <img class="h-10 w-10 rounded-xl object-cover" src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}">
                                                     @else
-                                                        <div class="h-10 w-10 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                                                        <div class="h-10 w-10 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
                                                             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                                 <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"></path>
                                                             </svg>
@@ -309,12 +321,12 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                {{ $product->category->name ?? 'Tanpa Kategori' }}
+                                                {{ $product->category->name ?? 'No Category' }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right">
-                                            <div class="text-sm font-bold text-gray-900">{{ $product->total_sold ?? 0 }} unit</div>
-                                            <div class="text-xs text-gray-500">Minggu ini</div>
+                                            <div class="text-sm font-bold text-gray-900">{{ $product->total_sold ?? 0 }} units</div>
+                                            <div class="text-xs text-gray-500">This week</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right">
                                             <div class="text-sm font-bold text-green-600">
@@ -329,7 +341,7 @@
                                             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                                             </svg>
-                                            <p class="mt-2 text-sm text-gray-500">Belum ada data penjualan minggu ini</p>
+                                            <p class="mt-2 text-sm text-gray-500">No sales data for this week</p>
                                         </td>
                                     </tr>
                                 @endforelse
@@ -338,7 +350,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 </div>
 
