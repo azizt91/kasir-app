@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Storage;
         }
         .hero-image {
             /* background-image: url('https://placehold.co/1000x800/667EEA/FFFFFF?text=Modern+POS+System'); */
-            background-image: url('/beautiful-family-standing-cash-counter.jpg');
+            background-image: url('{{ asset('beautiful-family-standing-cash-counter.jpg') }}');
             background-size: cover;
             background-position: center;
         }
